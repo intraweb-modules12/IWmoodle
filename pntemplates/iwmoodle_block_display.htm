@@ -2,11 +2,11 @@
 <link rel="stylesheet" href="modules/IWmoodle/css/layout.css" type="text/css">
 <!--[if not $isuser]-->
 <div class = "nouser">
-    <!--[gt text="You're not user of Moodle. Click to link" domain="module_IWmoodle"]--> <strong><!--[gt text="Go to Moodle" domain="module_IWmoodle"]--></strong> <!--[gt text="to activate your account" domain="module_IWmoodle"]-->
+    <!--[gt text="You're not user of Moodle. Click to link"]--> <strong><!--[gt text="Go to Moodle"]--></strong> <!--[gt text="to activate your account"]-->
 </div>
 <!--[if $courses|@count gt 0]-->
 <div class = "nouser">
-    <!--[gt text="Courses to which you are enrolled.:" domain="module_IWmoodle"]-->
+    <!--[gt text="Courses to which you are enrolled.:"]-->
 </div>
 <!--[/if]-->
 <!--[/if]-->
@@ -22,21 +22,21 @@
             <!--[$courses[courses].roles]-->
         </div>
         <div class="infoBoxClose">
-            <a href="#" onClick="overlayclose('<!--[$courses[courses].id]-->'); return false"><!--[gt text="Close" domain="module_IWmoodle"]--> <!--[pnimg modname='IWmoodle' src='closeinfo.png' set='pnimages']--></a>
+            <a href="#" onClick="overlayclose('<!--[$courses[courses].id]-->'); return false"><!--[gt text="Close"]--> <!--[pnimg modname='IWmoodle' src='closeinfo.png' set='pnimages']--></a>
         </div>
     </div>
     <div style="clear: both;"></div>
 </div>
 <!--[/section]-->
 <!--[if not $courses|@count gt 0]-->
-<!--[gt text="You're not enrolled to any courses." domain="module_IWmoodle"]-->
+<!--[gt text="You're not enrolled to any courses."]-->
 <!--[/if]-->
 <div style="clear: both;"></div>
 <div class="goMoodle">
-    <a href="<!--[pnmodurl modname="IWmoodle" type="user" func="main" id=0]-->" target="_blank"><!--[gt text="Go to Moodle" domain="module_IWmoodle"]--></a>
+    <a href="<!--[pnmodurl modname="IWmoodle" type="user" func="main" id=0]-->" target="_blank"><!--[gt text="Go to Moodle"]--></a>
 </div>
 <!--[if $administrator]-->
 <div>
-    <a href="<!--[pnmodurl modname="IWmoodle" type="admin" func="main" id=0]-->"><!--[gt text="Administration" domain="module_IWmoodle"]--></a>
+    <a href="<!--[pnmodurl modname="IWmoodle" type="admin" func="main" id=0]-->"><!--[gt text="Administration"]--></a>
 </div>
 <!--[/if]-->
