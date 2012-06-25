@@ -41,7 +41,7 @@ function IWmoodle_init() {
     pnModSetVar('IWmoodle', 'moodleurl', '../moodle2');
     pnModSetVar('IWmoodle', 'newwindow', 1);
     pnModSetVar('IWmoodle', 'guestuser', 'guest');
-    pnModSetVar('IWmoodle', 'dbprefix', 'mdl_');
+    pnModSetVar('IWmoodle', 'dbprefix', 'm2');
 
     pnModSetVar('IWmoodle', 'dfl_description', 'User description');
     pnModSetVar('IWmoodle', 'dfl_language', 'en_utf8');
