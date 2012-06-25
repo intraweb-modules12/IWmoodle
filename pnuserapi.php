@@ -65,7 +65,7 @@ function IWmoodle_userapi_is_enroled($args) {
     }
     extract($args);
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -105,7 +105,7 @@ function IWmoodle_userapi_is_user($args) {
     }
     extract($args);
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -140,7 +140,7 @@ function IWmoodle_userapi_getcourse($args) {
         return false;
     }
     extract($args);
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -186,7 +186,7 @@ function IWmoodle_userapi_getuserMDuid($args) {
     }
     extract($args);
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -227,7 +227,7 @@ function IWmoodle_userapi_getusercourses($args) {
     $userid = $user_array['id'];
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
     $username = pnUserGetVar(uname);
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }

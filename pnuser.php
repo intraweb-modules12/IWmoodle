@@ -20,6 +20,9 @@ function IWmoodle_user_main() {
     if (pnUserGetVar('uname') != '') {
         //check if user is Moodle user
         $is_user = pnModAPIFunc('IWmoodle', 'user', 'is_user', array('user' => pnUserGetVar('uname')));
+        
+    
+        
         if (!$is_user) {
             //if not create it
             $inscribed = pnModApiFunc('IWmoodle', 'admin', 'inscriu');
@@ -133,13 +136,13 @@ function IWmoodle_user_create_inscription($args) {
         // Checks if user is enroled into the course with these role
         $is_enroled = pnModAPIFunc('IWmoodle', 'user', 'is_enroled', array('user' => $userMDuid['id'], 'course' => $course, 'role' => $role));
     }
-
+    
     // If the user is user Moodle and not is enroled into the course made the enrolement
     if ($is_user && !$is_enroled) {
         $enrol_user = pnModAPIFunc('IWmoodle', 'admin', 'enrol_user', array('user' => $userMDuid['id'], 'course' => $course, 'role' => $role));
         if ($enrol_user) {
             // Esborra la pre-inscripciï¿œ de la base de dades
-            pnModAPIFunc('IWmoodle', 'user', 'delete_pre', array('mid' => $mid));
+//            pnModAPIFunc('IWmoodle', 'user', 'delete_pre', array('mid' => $mid));
         }
     }
     return true;

@@ -2,7 +2,7 @@
 
 /**
  * Gets all the uses pre-enroled into a course
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the course
  * @return:	And array with the users
  */
@@ -34,7 +34,7 @@ function IWmoodle_adminapi_getallpreins($args) {
 
 /**
  * Get all the courses avaliable in Moodle
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @return:	The main information about the courses avaliable in Moodle
  */
 function IWmoodle_adminapi_getall() {
@@ -45,7 +45,7 @@ function IWmoodle_adminapi_getall() {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -77,7 +77,7 @@ function IWmoodle_adminapi_getall() {
 
 /**
  * Delete the enrolament of a user into a course
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the role into the role_assignments table
  * @return:	true if success
  */
@@ -89,7 +89,7 @@ function IWmoodle_adminapi_delete($args) {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -110,7 +110,7 @@ function IWmoodle_adminapi_delete($args) {
 
 /**
  * Change the activation of the Moodle courses
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the course to activate or to unactivate
  * @return:	true if success
  */
@@ -122,7 +122,7 @@ function IWmoodle_adminapi_activate($args) {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -147,7 +147,7 @@ function IWmoodle_adminapi_activate($args) {
 
 /**
  * Gets all users enroled into a course and the roles of these users
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the course
  * @return:	An array with the users and roles
  */
@@ -159,7 +159,7 @@ function IWmoodle_adminapi_getallusersbyrole($args) {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -196,7 +196,7 @@ function IWmoodle_adminapi_getallusersbyrole($args) {
 
 /**
  * Gets all the roles in a Moodle course
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the course
  * @return:	An array with the name and identities of the roles
  */
@@ -207,7 +207,7 @@ function IWmoodle_adminapi_getallroles() {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -232,7 +232,7 @@ function IWmoodle_adminapi_getallroles() {
 
 /**
  * Get the id of a user into the website
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   the user name
  * @return:	the id of the user
  */
@@ -253,7 +253,7 @@ function IWmoodle_adminapi_getuserPNuid($args) {
 
 /**
  * Create the enrolements and the preinscriptions of the users into the courses
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the course, the roles and a array with the users
  * @return:	true if success
  */
@@ -265,20 +265,14 @@ function IWmoodle_adminapi_enrol_user($args) {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
+    
     DBConnectionStack::popConnection();
     $time = time();
-    $sql = "SELECT
-			$prefix" . "context.id
-			FROM
-				$prefix" . "context
-			WHERE
-				$prefix" . "context.instanceid=$course
-			AND
-				$prefix" . "context.contextlevel=50";
+    $sql = "SELECT $prefix" . "context.id FROM $prefix" . "context WHERE $prefix" . "context.instanceid=$course AND $prefix" . "context.contextlevel=50";
     $rs = $connect->Execute($sql);
     if (!$rs) {
         $connect->close();
@@ -286,22 +280,47 @@ function IWmoodle_adminapi_enrol_user($args) {
     }
     $array = $rs->FetchRow();
     $contextid = $array[0];
-    $sql = "INSERT INTO
-			$prefix" . "role_assignments (userid,roleid,contextid,timemodified,enrol,modifierid)
-			VALUES
-			($user,$role,$contextid,'$time','db'," . pnUserGetVar("uid") . ")";
+
+    $sql = "INSERT INTO $prefix" . "role_assignments (userid,roleid,contextid,timemodified,modifierid) VALUES ($user,$role,$contextid,'$time'," . pnUserGetVar("uid") . ")";
+
     $result = $connect->Execute($sql);
     if (!$result) {
         $connect->close();
         return LogUtil::registerError(__('An error occurred doing the action.', $dom));
     }
+
+    // No sé d'on surt el paràmetre enrolid però es pot obtenir sabent que a 2->1, 3->4, 4->7,5->10,6->13 i amb la fórmula (n-1) x 2 + n - 3
+    
+    $enrolid = ($course - 1) * 2 + $course - 3;
+    
+    $sql = "INSERT INTO $prefix" . "user_enrolments (status,enrolid,userid,timestart,timeend,modifierid,timecreated,timemodified)
+                                                                          VALUES (0,$enrolid,$user,'$time','',$user,'$time','$time')";
+
+    $result = $connect->Execute($sql);
+    if (!$result) {
+        print $sql;die();
+        $connect->close();
+        return LogUtil::registerError(__('An error occurred doing the action.', $dom));
+    }
+
+
+
+    /*
+      INSERT INTO `mdl_role_assignments` (`id`, `roleid`, `contextid`, `userid`, `timemodified`, `modifierid`, `component`, `itemid`, `sortorder`) VALUES
+      (1, 5, 15, 3, 1340279512, 2, '', 0, 0);
+
+      INSERT INTO `mdl_user_enrolments` (`id`, `status`, `enrolid`, `userid`, `timestart`, `timeend`, `modifierid`, `timecreated`, `timemodified`) VALUES
+      (1, 0, 1, 3, 1340229600, 0, 2, 1340279512, 1340279512);
+     * 
+     */
+
     $connect->close();
     return true;
 }
 
 /**
  * Count the number of users who satisfy a rule
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   the rule that have to be satisfied
  * @return:	The number of users who satisfy the rule
  */
@@ -344,7 +363,7 @@ function IWmoodle_adminapi_nombre($args) {
 
 /**
  * Change the method used by the user to validate into Moodle. Two possibilities: from the website via db or from the Moodle using the manual method
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the users that have to change their validation method
  * @return:	true if success
  */
@@ -356,7 +375,7 @@ function IWmoodle_adminapi_change($args) {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -390,7 +409,7 @@ function IWmoodle_adminapi_change($args) {
 
 /**
  * Create user into Moodle
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the users that have to change their validation method
  * @return:	true if success
  */
@@ -405,7 +424,7 @@ function IWmoodle_adminapi_inscriu($args) {
         $uid = pnUserGetVar('uid');
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -471,7 +490,7 @@ function IWmoodle_adminapi_inscriu($args) {
 
 /**
  * Gets all users
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   id of the group of users to return
  * @return:	an array with the main information of the users
  */
@@ -520,7 +539,7 @@ function IWmoodle_adminapi_getusers($args) {
 
 /**
  * Pre-enrol user in a course
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   Array with the id of the course, the role and the id of the user
  * @return:	True if success
  */
@@ -542,7 +561,7 @@ function IWmoodle_adminapi_preenrol_user($args) {
 
 /**
  * Pre-enrol user in a course
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   Array with the id of the course, the role and the id of the user
  * @return:	True if success
  */
@@ -556,7 +575,7 @@ function IWmoodle_adminapi_getMoodleUsers($args) {
         return LogUtil::registerPermissionError();
     }
     $prefix = pnModGetVar('IWmoodle', 'dbprefix');
-    $connect = DBConnectionStack::init('moodle');
+    $connect = DBConnectionStack::init('moodle2');
     if (!$connect) {
         return LogUtil::registerError(__('The connection to Moodle database has failed.', $dom));
     }
@@ -589,7 +608,7 @@ function IWmoodle_adminapi_getMoodleUsers($args) {
 
 /**
  * Create a new user in table users
- * @author:     Albert PÃ©rez Monfort (aperezm@xtec.cat)
+ * @author:     Albert Pérez Monfort (aperezm@xtec.cat)
  * @param:	args   user values
  * @return:	True if success and false otherwise
  */
