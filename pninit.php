@@ -38,7 +38,7 @@ function IWmoodle_init() {
         return false;
 
     //Create module vars
-    pnModSetVar('IWmoodle', 'moodleurl', '../moodle');
+    pnModSetVar('IWmoodle', 'moodleurl', '../moodle2');
     pnModSetVar('IWmoodle', 'newwindow', 1);
     pnModSetVar('IWmoodle', 'guestuser', 'guest');
     pnModSetVar('IWmoodle', 'dbprefix', 'mdl_');
