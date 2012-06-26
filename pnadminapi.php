@@ -272,6 +272,8 @@ function IWmoodle_adminapi_enrol_user($args) {
     
     DBConnectionStack::popConnection();
     $time = time();
+    
+    // get context id
     $sql = "SELECT $prefix" . "context.id FROM $prefix" . "context WHERE $prefix" . "context.instanceid=$course AND $prefix" . "context.contextlevel=50";
     $rs = $connect->Execute($sql);
     if (!$rs) {
@@ -289,30 +291,24 @@ function IWmoodle_adminapi_enrol_user($args) {
         return LogUtil::registerError(__('An error occurred doing the action.', $dom));
     }
 
-    // No sé d'on surt el paràmetre enrolid però es pot obtenir sabent que a 2->1, 3->4, 4->7,5->10,6->13 i amb la fórmula (n-1) x 2 + n - 3
-    
-    $enrolid = ($course - 1) * 2 + $course - 3;
-    
+    // get enrolid id
+    $sql = "SELECT $prefix" . "enrol.id FROM $prefix" . "enrol WHERE $prefix" . "enrol.enrol='manual' AND $prefix" . "enrol.courseid=$course";
+    $rs = $connect->Execute($sql);
+    if (!$rs) {
+        $connect->close();
+        return LogUtil::registerError(__('Error! Could not load items.', $dom));
+    }
+    $array = $rs->FetchRow();
+    $enrolid = $array[0];
+
     $sql = "INSERT INTO $prefix" . "user_enrolments (status,enrolid,userid,timestart,timeend,modifierid,timecreated,timemodified)
-                                                                          VALUES (0,$enrolid,$user,'$time','',$user,'$time','$time')";
+                                                                          VALUES (0,$enrolid,$user,'$time','2147483647',$user,'$time','$time')";
 
     $result = $connect->Execute($sql);
     if (!$result) {
-        print $sql;die();
         $connect->close();
         return LogUtil::registerError(__('An error occurred doing the action.', $dom));
     }
-
-
-
-    /*
-      INSERT INTO `mdl_role_assignments` (`id`, `roleid`, `contextid`, `userid`, `timemodified`, `modifierid`, `component`, `itemid`, `sortorder`) VALUES
-      (1, 5, 15, 3, 1340279512, 2, '', 0, 0);
-
-      INSERT INTO `mdl_user_enrolments` (`id`, `status`, `enrolid`, `userid`, `timestart`, `timeend`, `modifierid`, `timecreated`, `timemodified`) VALUES
-      (1, 0, 1, 3, 1340229600, 0, 2, 1340279512, 1340279512);
-     * 
-     */
 
     $connect->close();
     return true;
